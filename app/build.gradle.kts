@@ -48,6 +48,7 @@ dependencies {
     implementation(project(":features:dashboard"))
     implementation(project(":features:setting"))
     implementation(libs.androidx.core.ktx)
+    implementation(libs.kotlin.serialization)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))

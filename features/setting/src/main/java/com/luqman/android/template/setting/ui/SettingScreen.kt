@@ -21,6 +21,7 @@ import com.luqman.android.template.core.ui.theme.AndroidMVITemplateTheme
 @Composable
 fun SettingScreen(
     modifier: Modifier,
+    notes: String = "Setting page",
     onBack: () -> Unit = {}
 ) {
     Scaffold(modifier, topBar = {
@@ -40,7 +41,7 @@ fun SettingScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Setting page")
+            Text(notes.ifEmpty { "Setting page" })
         }
     }
 }
