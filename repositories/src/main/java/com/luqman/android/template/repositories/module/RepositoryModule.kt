@@ -2,10 +2,10 @@ package com.luqman.android.template.repositories.module
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
+import androidx.datastore.core.DataStoreFactory
+import androidx.datastore.dataStoreFile
 import com.luqman.android.template.mvi.datastore.UserPreferences
 import com.luqman.android.template.repositories.serializer.UserPreferenceSerializer
-import com.luqman.android.template.repositories.user.userPreferenceDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,14 +15,26 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class RepositoryModule {
+object RepositoryModule {
+
+    @Provides
+    @Singleton
+    fun provideUserPreferenceSerializer(): UserPreferenceSerializer {
+        return UserPreferenceSerializer()
+    }
 
     @Provides
     @Singleton
     fun provideUserDataStore(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
+        userPreferenceSerializer: UserPreferenceSerializer
     ): DataStore<UserPreferences> {
-        return context.userPreferenceDataStore
+        return DataStoreFactory.create(
+            serializer = userPreferenceSerializer,
+            produceFile = {
+                context.dataStoreFile("user_preferences.pb")
+            }
+        )
     }
 
 }
