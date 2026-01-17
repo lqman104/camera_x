@@ -1,8 +1,5 @@
 package com.luqman.android.template.core.network.di
 
-import com.luqman.android.template.core.network.client.AppHttpClient
-import com.luqman.android.template.core.network.client.AppHttpClientImpl
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,29 +15,23 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class NetworkModule {
+object NetworkModule {
 
-    @Binds
+    @Provides
     @Singleton
-    abstract fun bindAppHttpClient(impl: AppHttpClientImpl): AppHttpClient
-
-    companion object {
-        @Provides
-        @Singleton
-        fun provideHttpClient(): HttpClient {
-            return HttpClient(CIO) {
-                install(ContentNegotiation) {
-                    json(Json {
-                        ignoreUnknownKeys = true
-                        prettyPrint = true
-                        isLenient = true
-                    })
-                }
-                install(Logging) {
-                    level = LogLevel.BODY
-                }
-                // Timeout and other configurations can be added here
+    fun provideHttpClient(): HttpClient {
+        return HttpClient(CIO) {
+            install(ContentNegotiation) {
+                json(Json {
+                    ignoreUnknownKeys = true
+                    prettyPrint = true
+                    isLenient = true
+                })
             }
+            install(Logging) {
+                level = LogLevel.BODY
+            }
+            // Timeout and other configurations can be added here
         }
     }
 }
