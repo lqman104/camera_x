@@ -9,13 +9,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.luqman.android.camera.basic.ui.BasicCameraScreen
+import com.luqman.android.camera.dashboard.model.BasicCameraNav
 import com.luqman.android.camera.dashboard.model.DashboardNav
 import com.luqman.android.camera.dashboard.ui.DashboardScreen
-import com.luqman.android.camera.dashboard.view_model.DashboardViewModel
-
+import com.luqman.android.camera.setting.model.SettingNav
 import com.luqman.android.camera.setting.ui.SettingScreen
 import com.luqman.android.camera.setting.view_model.SettingViewModel
-import com.luqman.android.camera.setting.model.SettingNav
 
 @Composable
 fun MainNavigation(
@@ -24,14 +24,13 @@ fun MainNavigation(
     val navController = rememberNavController()
     NavHost(navController = navController, modifier = modifier, startDestination = DashboardNav) {
         composable<DashboardNav> {
-            val viewModel = hiltViewModel<DashboardViewModel>()
-            val state by viewModel.state.collectAsState()
             DashboardScreen(
-                state = state,
-                onEvent = viewModel::onEvent,
                 modifier = Modifier,
-                goToSetting = { navController.navigate(SettingNav(state.notes)) }
+                goToCameraBasic = { navController.navigate(BasicCameraNav) }
             )
+        }
+        composable<BasicCameraNav> {
+            BasicCameraScreen()
         }
         composable<SettingNav> {
             val settingNav = it.savedStateHandle.toRoute<SettingNav>()
