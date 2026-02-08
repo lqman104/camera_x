@@ -1,6 +1,7 @@
 *.iml
 .gradle
 /local.properties
+/.kotlin
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
@@ -25,7 +26,6 @@ captures/
 output.json
 
 # IntelliJ
-*.iml
 .idea/
 misc.xml
 deploymentTargetDropDown.xml

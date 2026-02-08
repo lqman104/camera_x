@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.luqman.android.template.setting"
+    namespace = "com.luqman.android.camera.setting"
     compileSdk {
         version = release(36)
     }

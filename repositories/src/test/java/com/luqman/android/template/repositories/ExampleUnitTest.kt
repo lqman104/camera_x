@@ -1,4 +1,4 @@
-package com.luqman.android.template.repositories
+package com.luqman.android.camera.repositories
 
 import org.junit.Test
 

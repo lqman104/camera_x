@@ -1,4 +1,4 @@
-package com.luqman.android.template.setting
+package com.luqman.android.camera.setting
 
 import org.junit.Test
 

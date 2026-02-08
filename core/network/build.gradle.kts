@@ -14,7 +14,7 @@ val localProps = Properties().apply {
 }
 
 android {
-    namespace = "com.luqman.android.template.core.network"
+    namespace = "com.luqman.android.camera.core.network"
     compileSdk {
         version = release(36)
     }

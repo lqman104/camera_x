@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Android(MVI Template"
+rootProject.name = "Camera Practice"
 include(":app")
 include(":features:dashboard")
 include(":repositories")

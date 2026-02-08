@@ -25,7 +25,7 @@ protobuf {
 
 
 android {
-    namespace = "com.luqman.android.template.repositories"
+    namespace = "com.luqman.android.camera.repositories"
     compileSdk {
         version = release(36)
     }

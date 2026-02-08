@@ -7,13 +7,13 @@ plugins {
 }
 
 android {
-    namespace = "com.luqman.android.template.mvi"
+    namespace = "com.luqman.android.camera"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.luqman.android.template.mvi"
+        applicationId = "com.luqman.android.camera"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

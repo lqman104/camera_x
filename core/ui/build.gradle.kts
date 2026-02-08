@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.luqman.android.template.core.ui"
+    namespace = "com.luqman.android.camera.core.ui"
     compileSdk {
         version = release(36)
     }

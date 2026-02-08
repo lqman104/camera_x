@@ -3,8 +3,8 @@
 # ==================================================
 # INPUT
 # ==================================================
-OLD_PACKAGE=$1
-NEW_APP_NAME=$2
+NEW_APP_NAME=$1
+OLD_PACKAGE=$2
 NEW_PACKAGE=$3
 
 if [ -z "$NEW_APP_NAME" ] || [ -z "$OLD_PACKAGE" ] || [ -z "$NEW_PACKAGE" ]; then
@@ -13,7 +13,7 @@ if [ -z "$NEW_APP_NAME" ] || [ -z "$OLD_PACKAGE" ] || [ -z "$NEW_PACKAGE" ]; the
   exit 1
 fi
 
-echo "🚀 Initializing Android project..."
+echo "🚀 Initializing Android multi-module project..."
 echo "App Name     : $NEW_APP_NAME"
 echo "Old Package  : $OLD_PACKAGE"
 echo "New Package  : $NEW_PACKAGE"
@@ -25,26 +25,47 @@ OLD_PATH=$(echo $OLD_PACKAGE | tr '.' '/')
 NEW_PATH=$(echo $NEW_PACKAGE | tr '.' '/')
 
 # ==================================================
-# 1. Replace package references
+# MODULE LIST (EDITABLE)
+# ==================================================
+MODULES=(
+  "app"
+  "features/setting"
+  "features/dashboard"
+  "repositories"
+  "core/ui"
+  "core/network"
+)
+
+SOURCE_SETS=("main" "test" "androidTest")
+
+# ==================================================
+# 1. Replace package references in all modules
 # ==================================================
 echo "🔁 Replacing package references..."
 
-grep -rl "$OLD_PACKAGE" app | xargs sed -i '' "s/$OLD_PACKAGE/$NEW_PACKAGE/g"
-
-# ==================================================
-# 2. Rename directory structure
-# ==================================================
-echo "📁 Updating folder structure..."
-
-for SRC in app/src/main/java app/src/test/java app/src/androidTest/java; do
-  if [ -d "$SRC/$OLD_PATH" ]; then
-    mkdir -p "$SRC/$(dirname $NEW_PATH)"
-    mv "$SRC/$OLD_PATH" "$SRC/$NEW_PATH"
+for MODULE in "${MODULES[@]}"; do
+  if [ -d "$MODULE" ]; then
+    grep -rl "$OLD_PACKAGE" "$MODULE" | xargs sed -i '' "s/$OLD_PACKAGE/$NEW_PACKAGE/g"
   fi
 done
 
 # ==================================================
-# 3. Update app name
+# 2. Rename directory structures
+# ==================================================
+echo "📁 Updating folder structures..."
+
+for MODULE in "${MODULES[@]}"; do
+  for SRC in "${SOURCE_SETS[@]}"; do
+    BASE="$MODULE/src/$SRC/java"
+    if [ -d "$BASE/$OLD_PATH" ]; then
+      mkdir -p "$BASE/$(dirname $NEW_PATH)"
+      mv "$BASE/$OLD_PATH" "$BASE/$NEW_PATH"
+    fi
+  done
+done
+
+# ==================================================
+# 3. Update app name (only app module)
 # ==================================================
 echo "✏️ Updating app name..."
 
@@ -58,19 +79,29 @@ fi
 # ==================================================
 echo "⚙️ Updating Gradle configs..."
 
-grep -rl "$OLD_PACKAGE" app/build.gradle* | xargs sed -i '' "s/$OLD_PACKAGE/$NEW_PACKAGE/g"
+for MODULE in "${MODULES[@]}"; do
+  if [ -f "$MODULE/build.gradle.kts" ] || [ -f "$MODULE/build.gradle" ]; then
+    grep -rl "$OLD_PACKAGE" "$MODULE"/build.gradle* | xargs sed -i '' "s/$OLD_PACKAGE/$NEW_PACKAGE/g"
+  fi
+done
 
 # ==================================================
 # 5. Clean empty directories
 # ==================================================
 echo "🧹 Cleaning empty directories..."
-find app/src -type d -empty -delete
+for MODULE in "${MODULES[@]}"; do
+  if [ -d "$MODULE/src" ]; then
+    find "$MODULE/src" -type d -empty -delete
+  fi
+done
 
 # ==================================================
 # DONE
 # ==================================================
 echo "✅ Project initialized successfully!"
-echo "👉 Next steps:"
+echo ""
+echo "👉 Recommended next steps:"
 echo "   - Sync Gradle"
-echo "   - Update Firebase / CI configs"
-echo "   - Commit initial project setup"
+echo "   - Verify namespaces per module"
+echo "   - Update Firebase / CI / signing configs"
+echo "   - Commit initial setup"

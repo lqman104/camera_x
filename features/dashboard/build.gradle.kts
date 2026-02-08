@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.luqman.android.template.dashboard"
+    namespace = "com.luqman.android.camera.dashboard"
     compileSdk {
         version = release(36)
     }

@@ -1,4 +1,4 @@
-package com.luqman.android.template.repositories
+package com.luqman.android.camera.repositories
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.luqman.android.template.repositories.test", appContext.packageName)
+        assertEquals("com.luqman.android.camera.repositories.test", appContext.packageName)
     }
 }
