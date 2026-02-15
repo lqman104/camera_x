@@ -13,6 +13,7 @@ import com.luqman.android.camera.basic.ui.BasicCameraScreen
 import com.luqman.android.camera.dashboard.model.BasicCameraNav
 import com.luqman.android.camera.dashboard.model.DashboardNav
 import com.luqman.android.camera.dashboard.ui.DashboardScreen
+import com.luqman.android.camera.image_capture.ui.ImageCaptureScreen
 import com.luqman.android.camera.setting.model.SettingNav
 import com.luqman.android.camera.setting.ui.SettingScreen
 import com.luqman.android.camera.setting.view_model.SettingViewModel
@@ -30,7 +31,7 @@ fun MainNavigation(
             )
         }
         composable<BasicCameraNav> {
-            BasicCameraScreen()
+            ImageCaptureScreen()
         }
         composable<SettingNav> {
             val settingNav = it.savedStateHandle.toRoute<SettingNav>()

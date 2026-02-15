@@ -40,9 +40,9 @@ fun BasicCameraScreen() {
         provider.bindToLifecycle(lifeCycleOwner, CameraSelector.DEFAULT_BACK_CAMERA, preview)
     }
 
-    CameraScaffold(children = {
+    CameraScaffold {
         surfaceRequest?.let { req ->
             CameraXViewfinder(surfaceRequest = req, modifier = Modifier.fillMaxSize())
         }
-    }) { currentState -> currentState }
+    }
 }

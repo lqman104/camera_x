@@ -29,7 +29,6 @@ import com.luqman.android.camera.permission.utils.shouldShowPermissionRationale
 fun CameraScaffold(
     modifier: Modifier = Modifier,
     children: @Composable () -> Unit,
-    state: (CameraPermissionState) -> CameraPermissionState
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
@@ -55,7 +54,7 @@ fun CameraScaffold(
         val observer = LifecycleEventObserver { _, event ->
             val currentState = getCameraPermissionStatus(context, safeActivity)
             if (event == Lifecycle.Event.ON_RESUME && currentState == CameraPermissionState.Granted) {
-                permissionState = state(currentState)
+                permissionState = currentState
             }
         }
 
