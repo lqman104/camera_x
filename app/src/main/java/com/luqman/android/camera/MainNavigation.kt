@@ -10,9 +10,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.luqman.android.camera.basic.ui.BasicCameraScreen
-import com.luqman.android.camera.dashboard.model.BasicCameraNav
-import com.luqman.android.camera.dashboard.model.DashboardNav
 import com.luqman.android.camera.dashboard.ui.DashboardScreen
+import com.luqman.android.camera.features_navigation.BasicCameraNav
+import com.luqman.android.camera.features_navigation.ImageCaptureNav
+import com.luqman.android.camera.features_navigation.MainMenuNav
 import com.luqman.android.camera.image_capture.ui.ImageCaptureScreen
 import com.luqman.android.camera.setting.model.SettingNav
 import com.luqman.android.camera.setting.ui.SettingScreen
@@ -23,14 +24,18 @@ fun MainNavigation(
     modifier: Modifier,
 ) {
     val navController = rememberNavController()
-    NavHost(navController = navController, modifier = modifier, startDestination = DashboardNav) {
-        composable<DashboardNav> {
+    NavHost(navController = navController, modifier = modifier, startDestination = MainMenuNav) {
+        composable<MainMenuNav> {
             DashboardScreen(
                 modifier = Modifier,
-                goToCameraBasic = { navController.navigate(BasicCameraNav) }
+                goToCameraBasic = { navController.navigate(BasicCameraNav) },
+                goToImageCapture = { navController.navigate(ImageCaptureNav) }
             )
         }
         composable<BasicCameraNav> {
+            BasicCameraScreen()
+        }
+        composable<ImageCaptureNav> {
             ImageCaptureScreen()
         }
         composable<SettingNav> {
